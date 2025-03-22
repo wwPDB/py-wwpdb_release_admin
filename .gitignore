@@ -172,3 +172,10 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+
+# Emacs
+*~
+
+# auth file -- never checkin
+.auth

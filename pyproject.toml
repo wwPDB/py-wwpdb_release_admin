@@ -1,0 +1,85 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "wwpdb-release-admin"
+dynamic = ["version"]
+description = 'Tools to help prepare releases of OneDep software'
+readme = "README.md"
+requires-python = ">=3.8"
+license = "Apache-2.0"
+keywords = []
+authors = [
+  { name = "Ezra Peisach", email = "ezra.peisach@rcsb.org" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = ["gql[requests]"]
+
+[project.urls]
+Documentation = "https://github.com/wwPDB/py-wwpdb_release_admin#readme"
+Issues = "https://github.com/wwPDB/py-wwpdb_release_admin/issues"
+Source = "https://github.com/wwPDB/py-wwpdb_release_admin"
+
+
+[project.scripts]
+GetNeedMasterMerge = "wwpdb_release_admin.GetNeedMasterMerge:main"
+
+
+[tool.hatch.version]
+path = "src/wwpdb_release_admin/__init__.py"
+
+[tool.hatch.envs.types]
+extra-dependencies = [
+  "mypy>=1.0.0",
+]
+[tool.hatch.envs.types.scripts]
+check = "mypy --install-types --non-interactive {args:src/wwpdb_release_admin tests}"
+
+[tool.coverage.run]
+source_pkgs = ["wwpdb_release_admin", "tests"]
+branch = true
+parallel = true
+omit = [
+  "src/wwpdb_release_admin/__about__.py",
+]
+
+[tool.coverage.paths]
+wwpdb_release_admin = ["src/wwpdb_release_admin", "*/wwpdb-release-admin/src/wwpdb_release_admin"]
+tests = ["tests", "*/wwpdb-release-admin/tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
+
+[tool.ruff.lint]
+
+#
+# ------------------------- Ruff misc. options ----------------------
+preview = true
+explicit-preview-rules = true
+
+ignore = [
+  "N802",     # function should be lowercasre
+  "N999",     # Invalid module name,
+  "INP001",   # File `xx` is part of an implicit namespace package. Add an `__init__.py
+  "T201",     # print found
+  "PLW1514",  # open without encoding
+  "SIM108",   # Use ternary operator
+  "RET504",   # Unnecessary assignment to ret before return
+  "FBT002",   # Boolean default positional
+  "PLR6301",  # method could be a function or class method...
+]
